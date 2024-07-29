@@ -2,6 +2,7 @@ from sklearn import datasets
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
+import joblib
 
 def train_model():
   """
@@ -17,7 +18,7 @@ def train_model():
   y = iris.target  # Target variable (iris flower type)
 
   # Split data into training and testing sets
-  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
   # Create and train the logistic regression model
   model = LogisticRegression()
@@ -30,7 +31,11 @@ def train_model():
   accuracy = accuracy_score(y_test, predictions)
 
   # Print the accuracy
-  print(f"Model Accuracy: {accuracy:.4f}")
+  print("Training Completed ")
+
+  joblib.dump(model,'iris_modelv01.joblib')
+
+
 
   return model
 
