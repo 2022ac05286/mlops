@@ -31,5 +31,19 @@ jobs:
             
           echo '## Confusion Matrix Plot' >> report.md
           echo '![Confusion Matrix](model_results.png)' >> report.md
-
-          cml comment create report.md
+      - name: Save Report to Repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $dateTime = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
+          $reportFile = "${dateTime}_report.md"
+          Rename-Item -Path report.md -NewName $reportFile
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add $reportFile
+          git commit -m "Add evaluation report: $reportFile"
+          git push
+      - name: Create CML Comment
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: cml comment create $reportFile
