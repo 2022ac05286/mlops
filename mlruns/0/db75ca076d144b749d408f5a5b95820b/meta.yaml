@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/divya/OneDrive%20-%20wilp.bits-pilani.ac.in/Bits/Sem3/MLOPS/assignment1/mlops/mlruns/0/db75ca076d144b749d408f5a5b95820b/artifacts
+end_time: 1722338685205
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: db75ca076d144b749d408f5a5b95820b
+run_name: loud-bass-38
+run_uuid: db75ca076d144b749d408f5a5b95820b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1722338681920
+status: 3
+tags: []
+user_id: divya

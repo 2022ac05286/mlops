@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/divya/OneDrive%20-%20wilp.bits-pilani.ac.in/Bits/Sem3/MLOPS/assignment1/mlops/mlruns/0/b7231158e0304807b25e61602fb39fe9/artifacts
+end_time: 1722334213019
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: b7231158e0304807b25e61602fb39fe9
+run_name: delightful-eel-188
+run_uuid: b7231158e0304807b25e61602fb39fe9
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1722334210325
+status: 3
+tags: []
+user_id: divya

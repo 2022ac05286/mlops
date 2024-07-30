@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/divya/OneDrive%20-%20wilp.bits-pilani.ac.in/Bits/Sem3/MLOPS/assignment1/mlops/mlruns/0/a9f225b86f344a15894179b08f982a6d/artifacts
+end_time: 1722341847321
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: a9f225b86f344a15894179b08f982a6d
+run_name: beautiful-roo-876
+run_uuid: a9f225b86f344a15894179b08f982a6d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1722341844044
+status: 3
+tags: []
+user_id: divya

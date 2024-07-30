@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/divya/OneDrive%20-%20wilp.bits-pilani.ac.in/Bits/Sem3/MLOPS/assignment1/mlops/mlruns/0/d73636a60da349f7b07608e997672287/artifacts
+end_time: 1722339456597
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: d73636a60da349f7b07608e997672287
+run_name: sedate-snipe-295
+run_uuid: d73636a60da349f7b07608e997672287
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1722339452856
+status: 3
+tags: []
+user_id: divya

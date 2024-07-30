@@ -90,12 +90,7 @@ f1 = f1_score(y_test, predictions, average="macro")
 print("Accuracy:", str(round(accuracy, 2) * 100) + "%", "F1:", round(f1, 2))
 
 
-## Confusion Matrix Plot
-predictions = complete_pipe.predict(X_test)
-cm = confusion_matrix(y_test, predictions, labels=complete_pipe.classes_)
-disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=complete_pipe.classes_)
-disp.plot()
-plt.savefig("model_results.png", dpi=120)
+
 
 ## Write metrics to file
 with open("metrics.txt", "w") as outfile:

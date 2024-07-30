@@ -8,9 +8,10 @@ from sklearn.feature_selection import SelectKBest, chi2
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler, OrdinalEncoder
-from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, ConfusionMatrixDisplay
-from matplotlib import pyplot as plt
+from sklearn.metrics import accuracy_score, f1_score
+from datetime import datetime
 import skops.io as sio
+import joblib
 
 # Loading the data
 bank_df = pd.read_csv("train.csv", index_col="id", nrows=1000)
@@ -49,15 +50,25 @@ preproc_pipe = ColumnTransformer(
     remainder="passthrough",
 )
 
+# Fit the preprocessing pipeline
+preproc_pipe.fit(X_train)
+
+
+
 # Selecting the best features
 KBest = SelectKBest(chi2, k="all")
 
 # Define hyperparameters for different iterations
 hyperparameters = [
+    {"n_estimators": 50, "max_depth": 5},
     {"n_estimators": 100, "max_depth": 10},
-    {"n_estimators": 200, "max_depth": 15},
-    {"n_estimators": 150, "max_depth": 20}
+    {"n_estimators": 150, "max_depth": 15}
 ]
+
+# Initialize variables to track the best model
+best_accuracy = 0
+best_model = None
+best_timestamp = ""
 
 # MLflow Tracking
 for iteration, params in enumerate(hyperparameters):
@@ -92,6 +103,8 @@ for iteration, params in enumerate(hyperparameters):
         predictions = complete_pipe.predict(X_test)
         accuracy = accuracy_score(y_test, predictions)
         f1 = f1_score(y_test, predictions, average="macro")
+        # Get the current timestamp
+        timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         
         # Log parameters
         mlflow.log_param("iteration", iteration + 1)
@@ -107,17 +120,17 @@ for iteration, params in enumerate(hyperparameters):
         mlflow.sklearn.log_model(complete_pipe, "model")
         
         # Save metrics to file
-        with open("metrics.txt", "a") as outfile:
-            outfile.write(f"Iteration {iteration + 1} - Hyperparameters: {params} - Accuracy: {round(accuracy, 2)}, F1 Score: {round(f1, 2)}\n")
-
-        # Confusion Matrix Plot
-        cm = confusion_matrix(y_test, predictions, labels=complete_pipe.classes_)
-        disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=complete_pipe.classes_)
-        disp.plot()
-        plt.savefig(f"model_results_iteration_{iteration + 1}.png", dpi=120)
-        plt.close()
+        with open("experiments_metrics.txt", "a") as outfile:
+            outfile.write(f"DateTime {timestamp}-Iteration {iteration + 1} - Hyperparameters: {params} - Accuracy: {round(accuracy, 2)}, F1 Score: {round(f1, 2)}\n")
         
-        # Optionally save the pipeline
-        sio.dump(complete_pipe, f"bank_pipeline_iteration_{iteration + 1}.skops")
+        # Update best model if current model is better
+        if accuracy > best_accuracy:
+            best_accuracy = accuracy
+            best_model = complete_pipe
+            best_timestamp = timestamp
 
-print("Experiments completed.")
+# Save the best model with the timestamp and accuracy in the filename
+if best_model is not None:
+    joblib.dump(best_model, f"{best_timestamp}_{round(best_accuracy, 2)}.joblib")
+
+print("Experiments completed and Best Model Saved.")
