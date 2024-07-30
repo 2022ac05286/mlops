@@ -35,15 +35,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          DATE_TIME=$(date +'%Y-%m-%d_%H-%M-%S')
-          REPORT_FILE="${DATE_TIME}_report.md"
-          mv report.md $REPORT_FILE
+          $dateTime = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
+          $reportFile = "${dateTime}_report.md"
+          Rename-Item -Path report.md -NewName $reportFile
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add $REPORT_FILE
-          git commit -m "Add evaluation report: $REPORT_FILE"
+          git add $reportFile
+          git commit -m "Add evaluation report: $reportFile"
           git push
       - name: Create CML Comment
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: cml comment create $REPORT_FILE
+        run: cml comment create $reportFile
