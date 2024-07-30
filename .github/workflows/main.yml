@@ -31,12 +31,19 @@ jobs:
             
           echo '## Confusion Matrix Plot' >> report.md
           echo '![Confusion Matrix](model_results.png)' >> report.md
-      - name: Upload Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: report
-          path: report.md
+      - name: Save Report to Repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DATE_TIME=$(date +'%Y-%m-%d_%H-%M-%S')
+          REPORT_FILE="${DATE_TIME}_report.md"
+          mv report.md $REPORT_FILE
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add $REPORT_FILE
+          git commit -m "Add evaluation report: $REPORT_FILE"
+          git push
       - name: Create CML Comment
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: cml comment create report.md
+        run: cml comment create $REPORT_FILE
