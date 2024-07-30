@@ -31,5 +31,12 @@ jobs:
             
           echo '## Confusion Matrix Plot' >> report.md
           echo '![Confusion Matrix](model_results.png)' >> report.md
-
-          cml comment create report.md
+      - name: Upload Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: report
+          path: report.md
+      - name: Create CML Comment
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: cml comment create report.md
