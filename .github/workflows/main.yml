@@ -10,7 +10,7 @@ permissions: write-all
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macOS
     steps:
       - uses: actions/checkout@v3
         with:
